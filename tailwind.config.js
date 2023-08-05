@@ -4,7 +4,11 @@ export default {
   theme: {
     extend: {
       /*Si no extiendo pierdo la base de tailwind*/
-      colors: {},
+      colors: {
+        primary: {
+          100: "#37474f",
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animated")],

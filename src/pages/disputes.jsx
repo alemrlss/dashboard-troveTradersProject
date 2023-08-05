@@ -2,10 +2,9 @@ import { useState } from "react";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/Navbar/Navbar";
-import DashboardContent from "../components/Dashboard/DashboardContent";
-import Footer from "../components/Footer/Footer";
+import DisputesContent from "../components/Disputes/DisputesContent";
 
-function Dashboard() {
+function Disputes() {
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const toggleSidebar = () => {
@@ -18,15 +17,14 @@ function Dashboard() {
       <Sidebar toggleSidebar={toggleSidebar} sidebarVisible={sidebarVisible} />
 
       {/* Main Content */}
-      <div className="flex flex-col flex-grow p-4 overflow-y-auto">
+      <div className="flex flex-col flex-grow p-4">
         {/* Navbar */}
         <Navbar toggleSidebar={toggleSidebar} />
 
-        <DashboardContent />
-        {/*<Footer/>*/}
+        <DisputesContent />
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default Disputes;

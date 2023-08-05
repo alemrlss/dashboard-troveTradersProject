@@ -5,6 +5,8 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import Dashboard from "./pages/dashboard";
 import PublicRoute from "./components/Router/publicRoute";
 import PrivateRoute from "./components/Router/privateRoute";
+import Users from "./pages/users";
+import Disputes from "./pages/disputes";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             </Route>
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/usuarios" element={<Users />} />
+              <Route path="/dashboard/disputas" element={<Disputes />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -2,10 +2,9 @@ import { useState } from "react";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/Navbar/Navbar";
-import DashboardContent from "../components/Dashboard/DashboardContent";
-import Footer from "../components/Footer/Footer";
+import UsersContent from "../components/Users/UsersContent";
 
-function Dashboard() {
+function Users() {
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const toggleSidebar = () => {
@@ -21,12 +20,10 @@ function Dashboard() {
       <div className="flex flex-col flex-grow p-4 overflow-y-auto">
         {/* Navbar */}
         <Navbar toggleSidebar={toggleSidebar} />
-
-        <DashboardContent />
-        {/*<Footer/>*/}
+        <UsersContent />
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default Users;
