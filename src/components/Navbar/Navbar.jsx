@@ -12,10 +12,10 @@ const Navbar = ({ toggleSidebar }) => {
         <div className="flex items-center">
           {/* Buttons (Visible only on mobile) */}
           <div className="flex space-x-4 sm:hidden">
-            <button className="text-gray-600 hover:text-blue-200">
+            <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
               <BsGear className="text-xl" />
             </button>
-            <button className="text-gray-600 hover:text-blue-200">
+            <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
               <BsBell className="text-xl" />
             </button>
             {/* Mobile Menu Button */}
@@ -37,10 +37,10 @@ const Navbar = ({ toggleSidebar }) => {
 
         {/* Buttons and Search Input (Hidden on mobile) */}
         <div className="hidden sm:flex space-x-4">
-          <button className="text-gray-600 hover:text-blue-200">
+          <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
             <BsGear className="text-2xl" />
           </button>
-          <button className="text-gray-600 hover:text-blue-200">
+          <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
             <BsBell className="text-2xl" />
           </button>
         </div>

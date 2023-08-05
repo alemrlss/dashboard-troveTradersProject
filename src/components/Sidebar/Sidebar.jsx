@@ -1,15 +1,22 @@
 /* eslint-disable react/prop-types */
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
-  BsFillBarChartFill,
-  BsFillPersonFill,
   BsGem,
   BsX,
   BsFillHouseLockFill,
+  BsExclamationOctagon,
 } from "react-icons/bs";
+import { FaUsers, FaUserPlus } from "react-icons/fa";
+import { IoIosLock } from "react-icons/io";
 
 function Sidebar({ toggleSidebar, sidebarVisible }) {
+  const location = useLocation();
+
+  function isLinkActive(path) {
+    return location.pathname === path;
+  }
+
   return (
     <>
       <div
@@ -40,7 +47,9 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           <li>
             <Link
               to="/dashboard"
-              className="block hover:text-blue-300 m-5 text-lg font-semibold"
+              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard") ? "text-blue-300" : ""
+              }`}
             >
               <BsFillHouseLockFill className="inline-block mr-3 h-6 w-6" />
               Dashboard
@@ -49,39 +58,46 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           <li>
             <Link
               to="/dashboard/usuarios"
-              className="block hover:text-blue-300 m-5 text-lg font-semibold"
+              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/usuarios") ? "text-blue-300" : ""
+              }`}
             >
-              <BsFillPersonFill className="inline-block mr-3 h-6 w-6" />
+              <FaUsers className="inline-block mr-3 h-6 w-6" />
               Usuarios
             </Link>
           </li>
-
           <li>
             <Link
               to="/dashboard/disputas"
-              className="block hover:text-blue-300 m-5 text-lg font-semibold"
+              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/disputas") ? "text-blue-300" : ""
+              }`}
             >
-              <BsFillBarChartFill className="inline-block mr-3 h-6 w-6" />
+              <BsExclamationOctagon className="inline-block mr-3 h-6 w-6" />
               Disputas
             </Link>
           </li>
           <li>
             <Link
-              to="/dashboard/reports"
-              className="block hover:text-blue-300 m-5 text-lg font-semibold"
+              to="/dashboard/bloqueos"
+              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/bloqueos") ? "text-blue-300" : ""
+              }`}
             >
-              <BsFillBarChartFill className="inline-block mr-3 h-6 w-6" />
-              Bloqueo / Desbloqueo de cuentas
-            </Link>
-          <li>
-            <Link
-              to="/dashboard/reports"
-              className="block hover:text-blue-300 m-5 text-lg font-semibold"
-            >
-              <BsFillBarChartFill className="inline-block mr-3 h-6 w-6" />
-              Crear Cuenta de Admin(VIP)
+              <IoIosLock className="inline-block mr-3 h-6 w-6" />
+              Bloqueo de cuentas
             </Link>
           </li>
+          <li>
+            <Link
+              to="/dashboard/admin"
+              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/admin") ? "text-blue-300" : ""
+              }`}
+            >
+              <FaUserPlus className="inline-block mr-3 h-6 w-6" />
+              Admin
+            </Link>
           </li>
         </ul>
       </div>
