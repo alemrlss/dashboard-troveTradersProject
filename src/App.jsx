@@ -9,26 +9,33 @@ import Users from "./pages/users";
 import Disputes from "./pages/disputes";
 import Blocks from "./pages/blocks";
 import Admin from "./pages/admin";
+import { ColorProvider } from "./contexts/colorContext";
+import { FontProvider } from "./contexts/FontContext";
 
 function App() {
+
   return (
     <div className="app">
       <AuthContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<PublicRoute />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </Route>
-            <Route path="/" element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/usuarios" element={<Users />} />
-              <Route path="/dashboard/disputas" element={<Disputes />} />
-              <Route path="/dashboard/bloqueos" element={<Blocks />} />
-              <Route path="/dashboard/admin" element={<Admin />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <ColorProvider>
+          <FontProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<PublicRoute />}>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                </Route>
+                <Route path="/" element={<PrivateRoute />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard/usuarios" element={<Users />} />
+                  <Route path="/dashboard/disputas" element={<Disputes />} />
+                  <Route path="/dashboard/bloqueos" element={<Blocks />} />
+                  <Route path="/dashboard/administracion" element={<Admin />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </FontProvider>
+        </ColorProvider>
       </AuthContextProvider>
     </div>
   );

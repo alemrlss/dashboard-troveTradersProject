@@ -9,24 +9,26 @@ import {
 } from "react-icons/bs";
 import { FaUsers, FaUserPlus } from "react-icons/fa";
 import { IoIosLock } from "react-icons/io";
+import { useColorContext } from "../../contexts/colorContext";
 
 function Sidebar({ toggleSidebar, sidebarVisible }) {
+  const { activeColor } = useColorContext();
+
   const location = useLocation();
 
   function isLinkActive(path) {
     return location.pathname === path;
   }
+  const sidebarAnimationClass = sidebarVisible
+    ? "animate-fade-right animate-duration-200"
+    : "animate-fade-left animate-duration-200";
 
   return (
     <>
       <div
         className={`m-2 sm:m-4 rounded-xl fixed sm:static left-0 top-0 h-full w-60 sm:w-72 bg-primary-100 text-white p-4 z-10 ${
           sidebarVisible ? "" : "hidden"
-        } ${
-          sidebarVisible
-            ? "animate-fade-right animate-duration-200"
-            : "animate-fade-left animate-duration-200"
-        } sm:animate-fade animate-duration-100 `}
+        } ${sidebarAnimationClass} sm:animate-fade animate-duration-100 `}
       >
         <div className="flex justify-end mb-4 sm:hidden absolute top-4 right-4">
           <button
@@ -47,8 +49,8 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           <li>
             <Link
               to="/dashboard"
-              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
-                isLinkActive("/dashboard") ? "text-blue-300" : ""
+              className={`block m-5 hover:${activeColor} text-lg font-semibold ${
+                isLinkActive("/dashboard") ? `${activeColor}` : ""
               }`}
             >
               <BsFillHouseLockFill className="inline-block mr-3 h-6 w-6" />
@@ -58,8 +60,8 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           <li>
             <Link
               to="/dashboard/usuarios"
-              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
-                isLinkActive("/dashboard/usuarios") ? "text-blue-300" : ""
+              className={`block hover:${activeColor}  m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/usuarios") ? `${activeColor}` : ""
               }`}
             >
               <FaUsers className="inline-block mr-3 h-6 w-6" />
@@ -69,8 +71,8 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           <li>
             <Link
               to="/dashboard/disputas"
-              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
-                isLinkActive("/dashboard/disputas") ? "text-blue-300" : ""
+              className={`block hover:${activeColor} m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/disputas") ? `${activeColor}` : ""
               }`}
             >
               <BsExclamationOctagon className="inline-block mr-3 h-6 w-6" />
@@ -80,8 +82,8 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           <li>
             <Link
               to="/dashboard/bloqueos"
-              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
-                isLinkActive("/dashboard/bloqueos") ? "text-blue-300" : ""
+              className={`block hover:${activeColor} m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/bloqueos") ? `${activeColor}` : ""
               }`}
             >
               <IoIosLock className="inline-block mr-3 h-6 w-6" />
@@ -90,13 +92,15 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           </li>
           <li>
             <Link
-              to="/dashboard/admin"
-              className={`block hover:text-blue-300 m-5 text-lg font-semibold ${
-                isLinkActive("/dashboard/admin") ? "text-blue-300" : ""
+              to="/dashboard/administracion"
+              className={`block hover:${activeColor} m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/administracion")
+                  ? `${activeColor}`
+                  : ""
               }`}
             >
               <FaUserPlus className="inline-block mr-3 h-6 w-6" />
-              Admin
+              Administracion
             </Link>
           </li>
         </ul>

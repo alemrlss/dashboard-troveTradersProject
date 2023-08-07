@@ -1,10 +1,19 @@
 /* eslint-disable react/prop-types */
-
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BsGear, BsBell, BsList } from "react-icons/bs";
-
+import ConfigPanel from "./ConfigPanel";
 const Navbar = ({ toggleSidebar }) => {
   const location = useLocation();
+
+  const [showConfigPanel, setShowConfigPanel] = useState(false);
+
+  const handleConfigToggle = () => {
+    setShowConfigPanel(!showConfigPanel);
+  };
+  const handleConfigClose = () => {
+    setShowConfigPanel(false);
+  };
 
   return (
     <nav className="bg-white p-4 mb-4">
@@ -12,7 +21,10 @@ const Navbar = ({ toggleSidebar }) => {
         <div className="flex items-center">
           {/* Buttons (Visible only on mobile) */}
           <div className="flex space-x-4 sm:hidden">
-            <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
+            <button
+              onClick={handleConfigToggle}
+              className="text-gray-800  hover:bg-gray-200 p-2 rounded-md"
+            >
               <BsGear className="text-xl" />
             </button>
             <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
@@ -34,10 +46,14 @@ const Navbar = ({ toggleSidebar }) => {
             </p>
           </div>
         </div>
+        <ConfigPanel showPanel={showConfigPanel} onClose={handleConfigClose} />
 
         {/* Buttons and Search Input (Hidden on mobile) */}
         <div className="hidden sm:flex space-x-4">
-          <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
+          <button
+            onClick={handleConfigToggle}
+            className="text-gray-800  hover:bg-gray-200 p-2 rounded-md"
+          >
             <BsGear className="text-2xl" />
           </button>
           <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
