@@ -1,113 +1,37 @@
+import Loader from "../Loader/Loader";
 import BlockUser from "./BlockUser";
 import BlockedUsersList from "./BlockUserList";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 function BlocksContent() {
-  const usuariosBloqueados = [
-    {
-      email: "usuario1@example.com",
-      nombre: "Juan",
-      apellido: "Pérez",
-    },
-    {
-      email: "usuario2@example.com",
-      nombre: "María",
-      apellido: "Gómez",
-    },
-    {
-      email: "usuario3@example.com",
-      nombre: "Carlos",
-      apellido: "González",
-    },
-    {
-      email: "usuario4@example.com",
-      nombre: "Laura",
-      apellido: "Sánchez",
-    },
-    {
-      email: "usuario5@example.com",
-      nombre: "Ana",
-      apellido: "López",
-    },
-    {
-      email: "usuario6@example.com",
-      nombre: "Pedro",
-      apellido: "Ramírez",
-    },
-    {
-      email: "usuario7@example.com",
-      nombre: "Sofía",
-      apellido: "Martínez",
-    },
-    {
-      email: "usuario8@example.com",
-      nombre: "Luis",
-      apellido: "García",
-    },
-    {
-      email: "usuario9@example.com",
-      nombre: "Diana",
-      apellido: "Ortega",
-    },
-    {
-      email: "usuario10@example.com",
-      nombre: "Jorge",
-      apellido: "Hernández",
-    },
-    {
-      email: "usuario11@example.com",
-      nombre: "Carmen",
-      apellido: "Torres",
-    },
-    {
-      email: "usuario12@example.com",
-      nombre: "Fernando",
-      apellido: "Díaz",
-    },
-    {
-      email: "usuario13@example.com",
-      nombre: "Marta",
-      apellido: "Reyes",
-    },
-    {
-      email: "usuario14@example.com",
-      nombre: "Pablo",
-      apellido: "Vargas",
-    },
-    {
-      email: "usuario15@example.com",
-      nombre: "Lucía",
-      apellido: "Mendoza",
-    },
-    {
-      email: "usuario16@example.com",
-      nombre: "Ricardo",
-      apellido: "Fernández",
-    },
-    {
-      email: "usuario17@example.com",
-      nombre: "Adriana",
-      apellido: "Silva",
-    },
-    {
-      email: "usuario18@example.com",
-      nombre: "Emilio",
-      apellido: "Navarro",
-    },
-    {
-      email: "usuario19@example.com",
-      nombre: "Gabriela",
-      apellido: "Rojas",
-    },
-    {
-      email: "usuario20@example.com",
-      nombre: "Mario",
-      apellido: "Ortiz",
-    },
-  ];
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/users/block/users`
+        );
+
+        setLoading(false);
+        setData(response.data);
+      } catch (error) {
+        console.log(error); //PROGRAMAR ERROR.
+      }
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
   return (
     <div>
-      <BlockUser />
-      <BlockedUsersList usuariosBloqueados={usuariosBloqueados} />
+      {loading && <Loader />}
+      {data && <BlockUser usuariosBloqueados={data} setUsuariosBloqueados={setData} />}
+      {data && <BlockedUsersList usuariosBloqueados={data} setUsuariosBloqueados={setData} />}
     </div>
   );
 }

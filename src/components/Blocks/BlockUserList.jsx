@@ -1,12 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import ConfirmationDesblock from "./ConfirmationDesblock";
 
-const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
+const BlockedUsersList = ({ usuariosBloqueados, setUsuariosBloqueados }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(false);
 
-  const maxUsersPerPage = 5; // Cantidad de usuarios bloqueados a mostrar por página
+  const maxUsersPerPage = 5;
 
   const paginateUsers = (users) => {
     const indexOfLastUser = currentPage * maxUsersPerPage;
@@ -16,7 +20,6 @@ const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
 
   const totalPages = Math.ceil(usuariosBloqueados.length / maxUsersPerPage);
 
-  // Calcular el rango de páginas a mostrar
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
@@ -42,10 +45,35 @@ const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleDesbloquearUsuario = (email) => {
+    setSelectedUser(email);
+  };
+
+  const handleConfirmDesbloquear = async () => {
+    setLoading(true);
+
+    try {
+      await axios.post("http://localhost:3001/users/desblockByEmail", {
+        email: selectedUser,
+      });
+
+      setUsuariosBloqueados((prevUsers) =>
+        prevUsers.filter((user) => user.email !== selectedUser)
+      );
+
+      setSelectedUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <div className="p-4 bg-white shadow rounded-lg mt-4">
-      <h3 className="text-lg font-semibold mb-4 text-center">Usuarios bloqueados</h3>
-      {/* Search */}
+    <div className="p-4 bg-white shadow rounded-lg ">
+      <h3 className="text-2xl font-semibold mb-4 text-center">
+        Usuarios bloqueados
+      </h3>
       <div className="relative mb-4">
         <input
           type="text"
@@ -72,26 +100,26 @@ const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
       </div>
 
       {filteredUsers.length > 0 ? (
-        <table className="w-full table-auto">
+        <table className="w-full table-auto shadow-xl">
           <thead className="bg-gray-200">
             <tr>
               <th className="px-4 py-2">Correo</th>
               <th className="px-4 py-2">Nombre</th>
               <th className="px-4 py-2">Apellido</th>
-              <th className="px-4 py-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center">
             {paginateUsers(filteredUsers).map((usuario) => (
               <tr key={usuario.email}>
                 <td className="border px-4 py-2">{usuario.email}</td>
-                <td className="border px-4 py-2">{usuario.nombre}</td>
-                <td className="border px-4 py-2">{usuario.apellido}</td>
+                <td className="border px-4 py-2">{usuario.name}</td>
+                <td className="border px-4 py-2">{usuario.lastName}</td>
                 <td className="border px-4 py-2">
                   <button
                     onClick={() => handleDesbloquearUsuario(usuario.email)}
                     className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                   >
+                    {" "}
                     Desbloquear
                   </button>
                 </td>
@@ -100,18 +128,19 @@ const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
           </tbody>
         </table>
       ) : (
-        <p className="text-center">No hay usuarios bloqueados que coincidan con la búsqueda.</p>
+        <p className="text-center">
+          No hay usuarios bloqueados que coincidan con la búsqueda.
+        </p>
       )}
 
-      {/* Pagination */}
       {filteredUsers.length > maxUsersPerPage && (
-        <div className="mt-4 flex items-center justify-center space-x-4">
+        <div className="mt-4 flex items-center justify-center space-x-4 shadow-lg mb-8">
           <button
             onClick={handlePrevPage}
             className={`px-3 py-2 rounded-lg ${
               currentPage === 1
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-blue-500 text-white'
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-500 text-white"
             }`}
             disabled={currentPage === 1}
           >
@@ -123,8 +152,8 @@ const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
               onClick={() => handlePageChange(pageNumber)}
               className={`px-3 py-2 rounded-lg ${
                 currentPage === pageNumber
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-white text-blue-500'
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-blue-500"
               }`}
             >
               {pageNumber}
@@ -134,14 +163,22 @@ const BlockedUsersList = ({ usuariosBloqueados, handleDesbloquearUsuario }) => {
             onClick={handleNextPage}
             className={`px-3 py-2 rounded-lg ${
               currentPage === totalPages
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-blue-500 text-white'
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-500 text-white"
             }`}
             disabled={currentPage === totalPages}
           >
             Siguiente
           </button>
         </div>
+      )}
+      {selectedUser && (
+        <ConfirmationDesblock
+          loading={loading}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+          handleConfirmDesbloquear={handleConfirmDesbloquear}
+        />
       )}
     </div>
   );

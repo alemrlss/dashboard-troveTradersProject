@@ -1,21 +1,49 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import axios from "axios";
 
-const BlockUser = () => {
+const BlockUser = ({ usuariosBloqueados, setUsuariosBloqueados }) => {
   const [email, setEmail] = useState("");
-  const [usuariosBloqueados, setUsuariosBloqueados] = useState([]);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleBloquearUsuario = (e) => {
+  const handleBloquearUsuario = async (e) => {
     e.preventDefault();
-    // Aquí podrías implementar la lógica para bloquear el usuario con el correo 'email'
-    // Esto podría incluir una llamada a tu API o función en el backend para actualizar el estado de bloqueo en la base de datos
-    // Por ahora, simplemente agregaremos el correo a la lista de usuarios bloqueados
-    setUsuariosBloqueados([...usuariosBloqueados, email]);
-    // Limpia el campo de correo electrónico después de bloquear
-    setEmail("");
+
+    if (email === "") {
+      return
+    }
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/users/blockByEmail",
+        { email }
+      );
+
+      if (response.data.status === 403) {
+        setError("Este usuario ya está bloqueado.");
+        setSuccess("");
+      } else if (response.data.status === 404) {
+        setError("El usuario no existe.");
+        setSuccess("");
+      } else {
+        setError("");
+        setSuccess("Usuario bloqueado exitosamente.");
+        setUsuariosBloqueados([...usuariosBloqueados, response.data]);
+        setEmail("");
+      }
+    } catch (error) {
+      setError("No se pudo bloquear el usuario.");
+      setSuccess("");
+    }
+
+    setLoading(false);
   };
 
   return (
-    <div className="p-6 bg-white shadow rounded-lg">
+    <div className="p-6  shadow   rounded-lg">
       <h2 className="text-xl font-semibold mb-4 text-center">
         Bloqueo de usuarios
       </h2>
@@ -40,10 +68,13 @@ const BlockUser = () => {
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+            disabled={loading}
           >
-            Bloquear usuario
+            {loading ? "Bloqueando..." : "Bloquear usuario"}
           </button>
         </div>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {success && <p className="text-green-500 mt-2">{success}</p>}
       </form>
     </div>
   );
