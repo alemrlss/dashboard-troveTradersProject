@@ -100,33 +100,35 @@ const BlockedUsersList = ({ usuariosBloqueados, setUsuariosBloqueados }) => {
       </div>
 
       {filteredUsers.length > 0 ? (
-        <table className="w-full table-auto shadow-xl">
-          <thead className="bg-gray-200">
-            <tr>
-              <th className="px-4 py-2">Correo</th>
-              <th className="px-4 py-2">Nombre</th>
-              <th className="px-4 py-2">Apellido</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {paginateUsers(filteredUsers).map((usuario) => (
-              <tr key={usuario.email}>
-                <td className="border px-4 py-2">{usuario.email}</td>
-                <td className="border px-4 py-2">{usuario.name}</td>
-                <td className="border px-4 py-2">{usuario.lastName}</td>
-                <td className="border px-4 py-2">
-                  <button
-                    onClick={() => handleDesbloquearUsuario(usuario.email)}
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    {" "}
-                    Desbloquear
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto shadow-xl">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="px-4 py-2">Correo</th>
+                <th className="px-4 py-2">Nombre</th>
+                <th className="px-4 py-2">Apellido</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-center">
+              {paginateUsers(filteredUsers).map((usuario) => (
+                <tr key={usuario.email}>
+                  <td className="border px-4 py-2">{usuario.email}</td>
+                  <td className="border px-4 py-2">{usuario.name}</td>
+                  <td className="border px-4 py-2">{usuario.lastName}</td>
+                  <td className="border px-4 py-2">
+                    <button
+                      onClick={() => handleDesbloquearUsuario(usuario.email)}
+                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                    >
+                      {" "}
+                      Desbloquear
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p className="text-center">
           No hay usuarios bloqueados que coincidan con la búsqueda.
