@@ -24,10 +24,12 @@ function Dashboard() {
       {/* Main Content */}
       <div className="flex flex-col flex-grow p-4 overflow-y-auto">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
+        <div className="flex-grow">
+          <Navbar toggleSidebar={toggleSidebar} />
 
-        <DashboardContent />
-        {/*<Footer/>*/}
+          <DashboardContent />
+        </div>
+
         <Footer />
       </div>
     </div>

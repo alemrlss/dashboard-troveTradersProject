@@ -21,10 +21,12 @@ function Users() {
       <Sidebar toggleSidebar={toggleSidebar} sidebarVisible={sidebarVisible} />
 
       {/* Main Content */}
-      <div className="flex flex-col flex-grow p-4 overflow-y-auto">
+      <div className="flex flex-col flex-grow p-4 overflow-y-auto min-h-screen">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
-        <UsersContent />
+        <div className="flex-grow">
+          <Navbar toggleSidebar={toggleSidebar} />
+          <UsersContent />
+        </div>
         <Footer />
       </div>
     </div>

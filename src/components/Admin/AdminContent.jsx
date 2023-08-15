@@ -136,7 +136,11 @@ function AdminContent() {
               </p>
             </div>
           )}
-          <AdminList administradores={data} isAdminPlus={isAdminPlus} setAdmins={setData} />
+          <AdminList
+            administradores={data}
+            isAdminPlus={isAdminPlus}
+            setAdmins={setData}
+          />
         </>
       )}
     </div>

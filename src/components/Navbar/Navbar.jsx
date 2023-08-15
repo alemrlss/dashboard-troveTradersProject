@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BsGear, BsBell, BsList } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
 import ConfigPanel from "./ConfigPanel";
 const Navbar = ({ toggleSidebar }) => {
   const location = useLocation();
@@ -21,6 +22,9 @@ const Navbar = ({ toggleSidebar }) => {
         <div className="flex items-center">
           {/* Buttons (Visible only on mobile) */}
           <div className="flex space-x-4 sm:hidden">
+            <button className="text-gray-700 sm:hidden" onClick={toggleSidebar}>
+              <BsList className="text-3xl" />
+            </button>
             <button
               onClick={handleConfigToggle}
               className="text-gray-800  hover:bg-gray-200 p-2 rounded-md"
@@ -28,12 +32,9 @@ const Navbar = ({ toggleSidebar }) => {
               <BsGear className="text-xl" />
             </button>
             <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
-              <BsBell className="text-xl" />
+              <FiLogOut className="text-xl text-red-400" />
             </button>
             {/* Mobile Menu Button */}
-            <button className="text-gray-700 sm:hidden" onClick={toggleSidebar}>
-              <BsList className="text-3xl" />
-            </button>
           </div>
           {/* Page Reference */}
           <div className="font-bold text-sm tracking-widest	 mt-2 hidden sm:block sm:mt-0">
@@ -57,7 +58,7 @@ const Navbar = ({ toggleSidebar }) => {
             <BsGear className="text-2xl" />
           </button>
           <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
-            <BsBell className="text-2xl" />
+            <FiLogOut className="text-2xl text-red-400" />
           </button>
         </div>
 

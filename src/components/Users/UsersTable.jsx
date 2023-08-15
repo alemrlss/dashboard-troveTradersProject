@@ -1,10 +1,16 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
 import { BsSearch } from "react-icons/bs";
 import { FaTimes, FaCheck } from "react-icons/fa";
-const UsersTable = ({ users }) => {
+import ConfirmationDelete from "./ConfirmationDelete";
+import axios from "axios";
+const UsersTable = ({ users, onEditUser, setUsers }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(false);
+
   const maxUsersPerPage = 10;
   const pagesToShow = 4; // Número de páginas que se mostrarán en la paginación
 
@@ -16,12 +22,12 @@ const UsersTable = ({ users }) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleClearSearch = () => {
-    setSearchTerm("");
-  };
+  //const handleClearSearch = () => {
+  //setSearchTerm("");
+  //};
 
   const filteredUsers = users.filter((user) =>
-    user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const paginateUsers = (users) => {
@@ -63,9 +69,25 @@ const UsersTable = ({ users }) => {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
+  const handleConfirmDelete = async (id) => {
+    console.log(id);
+    setLoading(true);
 
+    try {
+      await axios.delete("http://localhost:3001/users/" + id);
+
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user.email !== selectedUser.email)
+      );
+      setSelectedUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  };
   return (
-    <div>
+    <div className="animate-fade animate-once animate-duration-1000 animate-delay-0 animate-ease-in-out">
       <div className="relative">
         <input
           type="text"
@@ -80,64 +102,73 @@ const UsersTable = ({ users }) => {
       </div>
 
       {/* Table */}
-      <table className="w-full border">
-        {/* Table head */}
-        <thead className="text-center">
-          <tr>
-            <th className="border px-4 py-2">Foto</th>
-            <th className="border px-4 py-2">Nombre</th>
-            <th className="border px-4 py-2">Apellido</th>
-            <th className="border px-4 py-2">Correo</th>
-            <th className="border px-4 py-2">Verificado</th>
-            <th className="border px-4 py-2">Acciones</th>
-          </tr>
-        </thead>
-        {/* Table body */}
-        <tbody className="text-center">
-          {filteredUsers.length === 0 ? (
+      <div className="overflow-x-auto">
+        <table className="w-full border table-auto">
+          {/* Table head */}
+          <thead className="text-center">
             <tr>
-              <td colSpan={6} className="border px-4 py-2">
-                No hay usuarios con ese nombre.
-              </td>
+              <th className="border px-4 py-2"></th>
+              <th className="border px-4 py-2">Nombre</th>
+              <th className="border px-4 py-2">Apellido</th>
+              <th className="border px-4 py-2">Correo</th>
+              <th className="border px-4 py-2">Verificado</th>
+              <th className="border px-4 py-2"></th>
             </tr>
-          ) : (
-            paginateUsers(filteredUsers).map((user) => (
-              <tr key={user.id}>
-                <td className="border px-4 py-2">
-                  <img
-                    src={user.photo}
-                    alt="User"
-                    className="w-8 h-8 rounded-full mx-auto"
-                  />
-                </td>
-                <td className="border px-4 py-2">{user.firstName}</td>
-                <td className="border px-4 py-2">{user.lastName}</td>
-                <td className="border px-4 py-2">{user.email}</td>
-                <td className="border px-4 py-2 flex justify-center">
-                  {user.verified ? (
-                    <span className="text-green-500">
-                      <FaCheck />
-                    </span>
-                  ) : (
-                    <span className="text-red-500">
-                      <FaTimes />
-                    </span>
-                  )}
-                </td>
-                <td className="border px-4 py-2">
-                  <button className="mr-2 bg-blue-500 text-white px-2 py-1 rounded-lg">
-                    Editar
-                  </button>
-                  <button className="bg-red-500 text-white px-2 py-1 rounded-lg">
-                    Eliminar
-                  </button>
+          </thead>
+          {/* Table body */}
+          <tbody className="text-center">
+            {filteredUsers.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="border px-4 py-2">
+                  No hay usuarios con ese nombre.
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-
+            ) : (
+              paginateUsers(filteredUsers).map((user) => (
+                <tr key={user._id}>
+                  <td className="border px-4 py-2">
+                    <img
+                      src={`http://localhost:3001/image/profile/${user.imageProfile}`}
+                      alt="User"
+                      className="w-8 h-8 rounded-full mx-auto"
+                    />
+                  </td>
+                  <td className="border px-4 py-2">{user.name}</td>
+                  <td className="border px-4 py-2">{user.lastName}</td>
+                  <td className="border px-4 py-2">{user.email}</td>
+                  <td className="border px-4 py-2 flex justify-center">
+                    {user.isVerify ? (
+                      <span className="text-green-500">
+                        <FaCheck />
+                      </span>
+                    ) : (
+                      <span className="text-red-500">
+                        <FaTimes />
+                      </span>
+                    )}
+                  </td>
+                  <td className="border px-4 py-2">
+                    <button
+                      className="mr-2 bg-blue-500 text-white px-2 py-1 rounded-lg"
+                      onClick={() => onEditUser(user._id)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSelectedUser({ email: user.email, id: user._id });
+                      }}
+                      className="bg-red-500 text-white px-2 py-1 rounded-lg"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* Pagination */}
       {filteredUsers.length > maxUsersPerPage && (
         <div className="mt-4 flex items-center justify-center space-x-4">
@@ -177,6 +208,14 @@ const UsersTable = ({ users }) => {
             Siguiente
           </button>
         </div>
+      )}
+      {selectedUser && (
+        <ConfirmationDelete
+          loading={loading}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+          handleConfirmDelete={handleConfirmDelete}
+        />
       )}
     </div>
   );

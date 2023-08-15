@@ -23,9 +23,11 @@ function Disputes() {
       {/* Main Content */}
       <div className="flex flex-col flex-grow p-4">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
-
-        <DisputesContent />
+        <div className="flex-grow">
+          <Navbar toggleSidebar={toggleSidebar} />
+          <DisputesContent />
+        </div>
+        <Footer />
       </div>
     </div>
   );

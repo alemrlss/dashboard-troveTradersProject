@@ -1,24 +1,58 @@
 import { BsPersonCheck, BsPersonPlus, BsCheck, BsPlay } from "react-icons/bs";
 import TopUsersCard from "./TopUsersCards";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Loader from "../Loader/Loader";
+import Graphics from "./Graphics";
 
 const DashboardContent = () => {
-  // Datos de ejemplo para las tarjetas
-  const data = [
-    {
-      title: "Usuarios verificados",
-      count: 150,
-      icon: BsPersonCheck,
-      color: "#42a5f5",
-    },
-    {
-      title: "Usuarios registrados",
-      count: 350,
-      icon: BsPersonPlus,
-      color: "#66bb6a",
-    },
-    { title: "Trades Finalizados", count: 80, icon: BsCheck, color: "#fbc02d" },
-    { title: "Trades en Ejecucion", count: 20, icon: BsPlay, color: "#ef5350" },
-  ];
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/users/dashboard/info`
+        );
+
+        setLoading(false);
+        setData([
+          {
+            title: "Usuarios verificados",
+            count: response.data.verified,
+            icon: BsPersonCheck,
+            color: "#42a5f5",
+          },
+          {
+            title: "Usuarios registrados",
+            count: response.data.registered,
+            icon: BsPersonPlus,
+            color: "#66bb6a",
+          },
+          {
+            title: "Trades Finalizados",
+            count: response.data.finishedTradesCount,
+            icon: BsCheck,
+            color: "#fbc02d",
+          },
+          {
+            title: "Trades en Ejecucion",
+            count: response.data.runningTrades,
+            icon: BsPlay,
+            color: "#ef5350",
+          },
+        ]);
+      } catch (error) {
+        console.log(error); //PROGRAMAR ERROR.
+      }
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const UserData = [
     {
       id: 1,
@@ -184,39 +218,43 @@ const DashboardContent = () => {
 
   return (
     <div className="p-2">
-      <h3 className="font-bold text-lg m-2">Dashboard</h3>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {/* Tarjetas */}
-        {data.map((item, index) => {
-          const Icon = item.icon;
+      {loading && <Loader />}
+      {data && (
+        <div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 animate-fade animate-duration-1000">
+            {data.map((item, index) => {
+              const Icon = item.icon;
 
-          return (
-            <div
-              key={index}
-              className="bg-white p-6 shadow-lg rounded-lg text-center flex items-center"
-              style={{ borderColor: item.color }}
-            >
-              <div className="mr-4">
-                <Icon className="text-4xl" style={{ color: item.color }} />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-2xl font-bold text-blue-500">{item.count}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-2">
-        <div className="md:col-span-2">
-          <TopUsersCard users={UserData} category="tradesAsBuyer" />
-          <TopUsersCard users={UserData} category="warnings" />
+              return (
+                <div
+                  key={index}
+                  className="bg-white p-6 shadow-lg rounded-lg text-center flex items-center"
+                  style={{ borderColor: item.color }}
+                >
+                  <div className="mr-4">
+                    <Icon className="text-4xl" style={{ color: item.color }} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                    <p className="text-2xl font-bold text-blue-500">
+                      {item.count}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <Graphics
+            usersVerified={data[0].count}
+            usersRegistered={data[1].count}
+          />
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 mt-2 animate-fade animate-duration-1000">
+            <TopUsersCard users={UserData} category="tradesAsSeller" />
+            <TopUsersCard users={UserData} category="ranking" />
+          </div>
         </div>
-        <div className="md:col-span-2">
-          <TopUsersCard users={UserData} category="tradesAsSeller" />
-          <TopUsersCard users={UserData} category="ranking" />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

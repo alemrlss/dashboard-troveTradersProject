@@ -1,413 +1,85 @@
+import Loader from "../Loader/Loader";
+import { useEffect, useState } from "react";
 import UsersTable from "./UsersTable";
+import axios from "axios";
+import EditUserForm from "./EditUserForm";
 
 const UsersContent = () => {
-  const UserData = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "john@example.com",
-      photo: "https://via.placeholder.com/50?text=John",
-      verified: true,
-    },
-    {
-      id: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane@example.com",
-      photo: "https://via.placeholder.com/50?text=Jane",
-      verified: false,
-    },
-    {
-      id: 3,
-      firstName: "Michael",
-      lastName: "Johnson",
-      email: "michael@example.com",
-      photo: "https://via.placeholder.com/50?text=Michael",
-      verified: true,
-    },
-    {
-      id: 4,
-      firstName: "David",
-      lastName: "Brown",
-      email: "david@example.com",
-      photo: "https://via.placeholder.com/50?text=David",
-      verified: true,
-    },
-    {
-      id: 5,
-      firstName: "Sarah",
-      lastName: "Miller",
-      email: "sarah@example.com",
-      photo: "https://via.placeholder.com/50?text=Sarah",
-      verified: false,
-    },
-    {
-      id: 6,
-      firstName: "Daniel",
-      lastName: "Wilson",
-      email: "daniel@example.com",
-      photo: "https://via.placeholder.com/50?text=Daniel",
-      verified: true,
-    },
-    {
-      id: 7,
-      firstName: "Emily",
-      lastName: "Taylor",
-      email: "emily@example.com",
-      photo: "https://via.placeholder.com/50?text=Emily",
-      verified: true,
-    },
-    {
-      id: 8,
-      firstName: "Christopher",
-      lastName: "Anderson",
-      email: "christopher@example.com",
-      photo: "https://via.placeholder.com/50?text=Christopher",
-      verified: false,
-    },
-    {
-      id: 9,
-      firstName: "Olivia",
-      lastName: "Thomas",
-      email: "olivia@example.com",
-      photo: "https://via.placeholder.com/50?text=Olivia",
-      verified: true,
-    },
-    {
-      id: 10,
-      firstName: "James",
-      lastName: "Harris",
-      email: "james@example.com",
-      photo: "https://via.placeholder.com/50?text=James",
-      verified: false,
-    },
-    {
-      id: 11,
-      firstName: "Sophia",
-      lastName: "Martin",
-      email: "sophia@example.com",
-      photo: "https://via.placeholder.com/50?text=Sophia",
-      verified: true,
-    },
-    {
-      id: 12,
-      firstName: "William",
-      lastName: "Jackson",
-      email: "william@example.com",
-      photo: "https://via.placeholder.com/50?text=William",
-      verified: true,
-    },
-    {
-      id: 13,
-      firstName: "Ava",
-      lastName: "White",
-      email: "ava@example.com",
-      photo: "https://via.placeholder.com/50?text=Ava",
-      verified: false,
-    },
-    {
-      id: 14,
-      firstName: "Alexander",
-      lastName: "Lee",
-      email: "alexander@example.com",
-      photo: "https://via.placeholder.com/50?text=Alexander",
-      verified: true,
-    },
-    {
-      id: 15,
-      firstName: "Mia",
-      lastName: "Scott",
-      email: "mia@example.com",
-      photo: "https://via.placeholder.com/50?text=Mia",
-      verified: true,
-    },
-    {
-      id: 16,
-      firstName: "Ethan",
-      lastName: "Green",
-      email: "ethan@example.com",
-      photo: "https://via.placeholder.com/50?text=Ethan",
-      verified: false,
-    },
-    {
-      id: 17,
-      firstName: "Abigail",
-      lastName: "Hall",
-      email: "abigail@example.com",
-      photo: "https://via.placeholder.com/50?text=Abigail",
-      verified: true,
-    },
-    {
-      id: 18,
-      firstName: "Benjamin",
-      lastName: "Baker",
-      email: "benjamin@example.com",
-      photo: "https://via.placeholder.com/50?text=Benjamin",
-      verified: true,
-    },
-    {
-      id: 19,
-      firstName: "Isabella",
-      lastName: "Nelson",
-      email: "isabella@example.com",
-      photo: "https://via.placeholder.com/50?text=Isabella",
-      verified: false,
-    },
-    {
-      id: 20,
-      firstName: "Daniel",
-      lastName: "Johnson",
-      email: "daniel2@example.com",
-      photo: "https://via.placeholder.com/50?text=Daniel",
-      verified: true,
-    },
-    {
-      id: 21,
-      firstName: "Liam",
-      lastName: "Brown",
-      email: "liam@example.com",
-      photo: "https://via.placeholder.com/50?text=Liam",
-      verified: true,
-    },
-    {
-      id: 22,
-      firstName: "Emma",
-      lastName: "Garcia",
-      email: "emma2@example.com",
-      photo: "https://via.placeholder.com/50?text=Emma",
-      verified: false,
-    },
-    {
-      id: 23,
-      firstName: "Noah",
-      lastName: "Smith",
-      email: "noah@example.com",
-      photo: "https://via.placeholder.com/50?text=Noah",
-      verified: true,
-    },
-    {
-      id: 24,
-      firstName: "Olivia",
-      lastName: "Johnson",
-      email: "olivia2@example.com",
-      photo: "https://via.placeholder.com/50?text=Olivia",
-      verified: true,
-    },
-    {
-      id: 25,
-      firstName: "William",
-      lastName: "Williams",
-      email: "william2@example.com",
-      photo: "https://via.placeholder.com/50?text=William",
-      verified: false,
-    },
-    {
-      id: 26,
-      firstName: "Ava",
-      lastName: "Jones",
-      email: "ava2@example.com",
-      photo: "https://via.placeholder.com/50?text=Ava",
-      verified: true,
-    },
-    {
-      id: 27,
-      firstName: "Oliver",
-      lastName: "Brown",
-      email: "oliver2@example.com",
-      photo: "https://via.placeholder.com/50?text=Oliver",
-      verified: true,
-    },
-    {
-      id: 28,
-      firstName: "Sophia",
-      lastName: "Davis",
-      email: "sophia2@example.com",
-      photo: "https://via.placeholder.com/50?text=Sophia",
-      verified: false,
-    },
-    {
-      id: 29,
-      firstName: "Ethan",
-      lastName: "Garcia",
-      email: "ethan2@example.com",
-      photo: "https://via.placeholder.com/50?text=Ethan",
-      verified: true,
-    },
-    {
-      id: 30,
-      firstName: "Amelia",
-      lastName: "Smith",
-      email: "amelia@example.com",
-      photo: "https://via.placeholder.com/50?text=Amelia",
-      verified: true,
-    },
-    {
-      id: 31,
-      firstName: "Olivia",
-      lastName: "Johnson",
-      email: "olivia3@example.com",
-      photo: "https://via.placeholder.com/50?text=Olivia",
-      verified: false,
-    },
-    {
-      id: 32,
-      firstName: "Noah",
-      lastName: "Martinez",
-      email: "noah2@example.com",
-      photo: "https://via.placeholder.com/50?text=Noah",
-      verified: true,
-    },
-    {
-      id: 33,
-      firstName: "Emma",
-      lastName: "Williams",
-      email: "emma3@example.com",
-      photo: "https://via.placeholder.com/50?text=Emma",
-      verified: true,
-    },
-    {
-      id: 34,
-      firstName: "Liam",
-      lastName: "Smith",
-      email: "liam2@example.com",
-      photo: "https://via.placeholder.com/50?text=Liam",
-      verified: false,
-    },
-    {
-      id: 35,
-      firstName: "Ava",
-      lastName: "Brown",
-      email: "ava3@example.com",
-      photo: "https://via.placeholder.com/50?text=Ava",
-      verified: true,
-    },
-    {
-      id: 36,
-      firstName: "Oliver",
-      lastName: "Johnson",
-      email: "oliver3@example.com",
-      photo: "https://via.placeholder.com/50?text=Oliver",
-      verified: true,
-    },
-    {
-      id: 37,
-      firstName: "Sophia",
-      lastName: "Garcia",
-      email: "sophia3@example.com",
-      photo: "https://via.placeholder.com/50?text=Sophia",
-      verified: false,
-    },
-    {
-      id: 38,
-      firstName: "Ethan",
-      lastName: "Smith",
-      email: "ethan3@example.com",
-      photo: "https://via.placeholder.com/50?text=Ethan",
-      verified: true,
-    },
-    {
-      id: 39,
-      firstName: "Amelia",
-      lastName: "Johnson",
-      email: "amelia2@example.com",
-      photo: "https://via.placeholder.com/50?text=Amelia",
-      verified: true,
-    },
-    {
-      id: 40,
-      firstName: "Olivia",
-      lastName: "Williams",
-      email: "olivia4@example.com",
-      photo: "https://via.placeholder.com/50?text=Olivia",
-      verified: false,
-    },
-    {
-      id: 41,
-      firstName: "Noah",
-      lastName: "Brown",
-      email: "noah3@example.com",
-      photo: "https://via.placeholder.com/50?text=Noah",
-      verified: true,
-    },
-    {
-      id: 42,
-      firstName: "Emma",
-      lastName: "Johnson",
-      email: "emma4@example.com",
-      photo: "https://via.placeholder.com/50?text=Emma",
-      verified: true,
-    },
-    {
-      id: 43,
-      firstName: "Liam",
-      lastName: "Garcia",
-      email: "liam3@example.com",
-      photo: "https://via.placeholder.com/50?text=Liam",
-      verified: false,
-    },
-    {
-      id: 44,
-      firstName: "Ava",
-      lastName: "Smith",
-      email: "ava4@example.com",
-      photo: "https://via.placeholder.com/50?text=Ava",
-      verified: true,
-    },
-    {
-      id: 45,
-      firstName: "Oliver",
-      lastName: "Williams",
-      email: "oliver4@example.com",
-      photo: "https://via.placeholder.com/50?text=Oliver",
-      verified: true,
-    },
-    {
-      id: 46,
-      firstName: "Sophia",
-      lastName: "Brown",
-      email: "sophia4@example.com",
-      photo: "https://via.placeholder.com/50?text=Sophia",
-      verified: false,
-    },
-    {
-      id: 47,
-      firstName: "Ethan",
-      lastName: "Johnson",
-      email: "ethan4@example.com",
-      photo: "https://via.placeholder.com/50?text=Ethan",
-      verified: true,
-    },
-    {
-      id: 48,
-      firstName: "Amelia",
-      lastName: "Garcia",
-      email: "amelia3@example.com",
-      photo: "https://via.placeholder.com/50?text=Amelia",
-      verified: true,
-    },
-    {
-      id: 49,
-      firstName: "Olivia",
-      lastName: "Smith",
-      email: "olivia5@example.com",
-      photo: "https://via.placeholder.com/50?text=Olivia",
-      verified: false,
-    },
-    {
-      id: 50,
-      firstName: "Noah",
-      lastName: "Johnson",
-      email: "noah4@example.com",
-      photo: "https://via.placeholder.com/50?text=Noah",
-      verified: true,
-    },
-  ];
-  
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/users`);
 
+        setLoading(false);
+        setData(response.data);
+      } catch (error) {
+        console.log(error); //PROGRAMAR ERROR.
+      }
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditingUser(null);
+  };
+  const handleSaveEdit = async (editedUser) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/users/${editedUser._id}`,
+        {
+          name: editedUser.name,
+          lastName: editedUser.lastName,
+          email: editedUser.email,
+        }
+      );
+
+      if (response.status === 200) {
+        const updatedUsers = data.map((user) =>
+          user._id === editedUser._id ? editedUser : user
+        );
+        setData(updatedUsers);
+        setIsEditing(false);
+        setEditingUser(null);
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+  const handleEditUser = (userId) => {
+    const userToEdit = data.find((user) => user._id === userId);
+    console.log(userToEdit);
+    console.log("aqui");
+    setEditingUser(userToEdit);
+    setIsEditing(true);
+
+    console.log(editingUser);
+    console.log(isEditing);
+  };
   return (
     <div className="">
-      <UsersTable users={UserData} />
+      {loading && <Loader />}
+      {data ? (
+        isEditing ? (
+          <EditUserForm
+            user={editingUser}
+            onCancel={handleCancelEdit}
+            onSave={handleSaveEdit}
+          />
+        ) : (
+          <UsersTable
+            users={data}
+            onEditUser={handleEditUser}
+            setUsers={setData}
+          />
+        )
+      ) : null}
     </div>
   );
 };

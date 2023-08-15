@@ -13,7 +13,6 @@ import { ColorProvider } from "./contexts/colorContext";
 import { FontProvider } from "./contexts/FontContext";
 
 function App() {
-
   return (
     <div className="app">
       <AuthContextProvider>
@@ -31,7 +30,10 @@ function App() {
                   <Route path="/dashboard/disputas" element={<Disputes />} />
                   <Route path="/dashboard/bloqueos" element={<Blocks />} />
                   <Route path="/dashboard/administracion" element={<Admin />} />
+                  <Route path="/dashboard/*" element={<h1>Not Found</h1>} />
                 </Route>
+
+                <Route path="*" element={<h1>Not Found</h1>} />
               </Routes>
             </BrowserRouter>
           </FontProvider>

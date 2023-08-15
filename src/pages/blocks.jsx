@@ -24,9 +24,11 @@ function Blocks() {
       {/* Main Content */}
       <div className="flex flex-col flex-grow p-4 overflow-y-auto">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
+        <div className="flex-grow">
+          <Navbar toggleSidebar={toggleSidebar} />
 
-        <BlocksContent />
+          <BlocksContent />
+        </div>
         <Footer />
       </div>
     </div>

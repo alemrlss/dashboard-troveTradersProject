@@ -23,8 +23,10 @@ function Admin() {
       {/* Main Content */}
       <div className="flex flex-col flex-grow p-4 overflow-y-auto">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
-        <AdminContent />
+        <div className="flex-grow">
+          <Navbar toggleSidebar={toggleSidebar} />
+          <AdminContent />
+        </div>
         <Footer />
       </div>
     </div>
