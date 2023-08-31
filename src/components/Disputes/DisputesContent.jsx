@@ -1,10 +1,5 @@
-
 function DisputesContent() {
-  return (
-    <div>
-      <h2>Disputes Content</h2>
-    </div>
-  );
+  return <div></div>;
 }
 
 export default DisputesContent;

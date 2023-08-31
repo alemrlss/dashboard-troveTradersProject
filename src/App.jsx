@@ -11,33 +11,39 @@ import Blocks from "./pages/blocks";
 import Admin from "./pages/admin";
 import { ColorProvider } from "./contexts/colorContext";
 import { FontProvider } from "./contexts/FontContext";
+import { SocketProvider } from "./contexts/socketContext";
 
 function App() {
   return (
     <div className="app">
       <AuthContextProvider>
-        <ColorProvider>
-          <FontProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<PublicRoute />}>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                </Route>
-                <Route path="/" element={<PrivateRoute />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/dashboard/usuarios" element={<Users />} />
-                  <Route path="/dashboard/disputas" element={<Disputes />} />
-                  <Route path="/dashboard/bloqueos" element={<Blocks />} />
-                  <Route path="/dashboard/administracion" element={<Admin />} />
-                  <Route path="/dashboard/*" element={<h1>Not Found</h1>} />
-                </Route>
+        <SocketProvider>
+          <ColorProvider>
+            <FontProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<PublicRoute />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                  </Route>
+                  <Route path="/" element={<PrivateRoute />}>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard/usuarios" element={<Users />} />
+                    <Route path="/dashboard/disputas" element={<Disputes />} />
+                    <Route path="/dashboard/bloqueos" element={<Blocks />} />
+                    <Route
+                      path="/dashboard/administracion"
+                      element={<Admin />}
+                    />
+                    <Route path="/dashboard/*" element={<h1>Not Found</h1>} />
+                  </Route>
 
-                <Route path="*" element={<h1>Not Found</h1>} />
-              </Routes>
-            </BrowserRouter>
-          </FontProvider>
-        </ColorProvider>
+                  <Route path="*" element={<h1>Not Found</h1>} />
+                </Routes>
+              </BrowserRouter>
+            </FontProvider>
+          </ColorProvider>
+        </SocketProvider>
       </AuthContextProvider>
     </div>
   );
