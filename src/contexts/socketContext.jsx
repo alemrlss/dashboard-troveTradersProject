@@ -20,7 +20,6 @@ const SocketProvider = ({ children }) => {
     };
   }, []);
 
-  console.log("socket conectado en el dashboard", socket);
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );

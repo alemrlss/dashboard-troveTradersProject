@@ -7,7 +7,7 @@ import {
   BsFillHouseLockFill,
   BsExclamationOctagon,
 } from "react-icons/bs";
-import { FaUsers, FaUserPlus } from "react-icons/fa";
+import { FaUsers, FaUserPlus, FaFileAlt } from "react-icons/fa";
 import { IoIosLock } from "react-icons/io";
 import { useColorContext } from "../../contexts/colorContext";
 
@@ -101,6 +101,19 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
             >
               <FaUserPlus className="inline-block mr-3 h-6 w-6" />
               Administracion
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/dashboard/denuncias"
+              className={`block hover:${activeColor} m-5 text-lg font-semibold ${
+                isLinkActive("/dashboard/administracion")
+                  ? `${activeColor}`
+                  : ""
+              }`}
+            >
+              <FaFileAlt className="inline-block mr-3 h-6 w-6" />
+              Denuncias
             </Link>
           </li>
         </ul>

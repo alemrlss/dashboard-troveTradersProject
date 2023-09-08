@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { BsGear, BsBell, BsList } from "react-icons/bs";
+import { BsGear, BsList } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import ConfigPanel from "./ConfigPanel";
 const Navbar = ({ toggleSidebar }) => {

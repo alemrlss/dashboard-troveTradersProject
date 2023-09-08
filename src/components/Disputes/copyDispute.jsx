@@ -35,7 +35,6 @@ function DisputesContent() {
   }, [socket]);
 
   const handleMessageReceived = (message) => {
-    console.log("hola");
     setMessages((prevMessages) => [...prevMessages, message]);
   };
   const handleSendMessage = () => {
