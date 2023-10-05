@@ -8,7 +8,7 @@ const ColorContext = createContext();
 export const useColorContext = () => useContext(ColorContext);
 
 export const ColorProvider = ({ children }) => {
-  const [activeColor, setActiveColor] = useState("text-blue-300");
+  const [activeColor, setActiveColor] = useState("text-primary-300");
 
   return (
     <ColorContext.Provider value={{ activeColor, setActiveColor }}>

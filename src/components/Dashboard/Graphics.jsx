@@ -32,7 +32,7 @@ function Graphics({ usersVerified, usersRegistered, dataBar }) {
   };
   return (
     <div className="hidden sm:flex  mt-4">
-      <div className="bg-white p-6 shadow-lg rounded-lg border-2 border-blue-500 w-1/2 mr-4">
+      <div className="bg-white p-6 shadow-lg rounded-lg border-2 border-primary-300 w-1/2 mr-4">
         <h3 className="text-lg font-semibold mb-2">Usuarios Verificados</h3>
         <div className="flex justify-center items-center">
           <PieChart width={400} height={400}>
@@ -67,7 +67,7 @@ function Graphics({ usersVerified, usersRegistered, dataBar }) {
         </div>
       </div>
 
-      <div className="bg-white p-6 shadow-lg rounded-lg border-2 border-blue-500 w-1/2">
+      <div className="bg-white p-6 shadow-lg rounded-lg border-2 border-primary-300 w-1/2">
         <h3 className="text-lg font-semibold mb-2">
           Publicaciones por categorias
         </h3>

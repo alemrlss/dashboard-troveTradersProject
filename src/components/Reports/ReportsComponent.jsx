@@ -68,15 +68,15 @@ function ReportsComponent() {
   };
   return (
     <div className="h-screen flex">
-      <nav className="bg-gray-600 rounded-md w-80 h-full py-4 text-md px-8 text-white">
+      <nav className="bg-white rounded-md w-96 h-full py-4 text-md px-8 text-black border border-black">
         <h2 className="text-2xl font-bold mb-4">Panel de Reportes</h2>
         <ul>
           {Object.keys(reportApiRoutes).map((reportType) => (
             <li
               key={reportType}
-              className={`cursor-pointer mb-2 ${
-                selectedReport === reportType ? "font-bold" : ""
-              } hover:bg-gray-600 hover:text-white`}
+              className={`cursor-pointer mb-2 px-2 ${
+                selectedReport === reportType ? "font-bold underline" : ""
+              } hover:opacity-75 `}
               onClick={() => handleReportChange(reportType)}
             >
               Reporte de {reportType}

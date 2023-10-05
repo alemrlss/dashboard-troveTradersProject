@@ -26,7 +26,7 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
   return (
     <>
       <div
-        className={`m-2 sm:m-4 rounded-xl fixed sm:static left-0 top-0 h-full w-60 sm:w-72 bg-primary-100 text-white p-4 z-10 ${
+        className={`m-2 sm:m-4 rounded-xl fixed sm:static left-0 top-0 h-full w-60 sm:w-72 bg-primary-200 text-white p-4 z-10 ${
           sidebarVisible ? "" : "hidden"
         } ${sidebarAnimationClass} sm:animate-fade animate-duration-100 `}
       >

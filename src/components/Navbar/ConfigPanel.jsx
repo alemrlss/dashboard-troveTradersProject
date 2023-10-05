@@ -50,7 +50,7 @@ const ConfigPanel = ({ showPanel, onClose }) => {
         showPanel ? "translate-x-0" : "translate-x-full"
       } transition-transform duration-300 ease-in-out z-20 `}
     >
-      <div className="p-4 bg-primary-100 text-white">
+      <div className="p-4 bg-primary-200 text-white">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <FaCogs className="mr-2 text-xl" />
