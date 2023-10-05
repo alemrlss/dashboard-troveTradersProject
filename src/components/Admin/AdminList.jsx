@@ -2,7 +2,9 @@
 import { useState } from "react";
 import axios from "axios";
 import ConfirmationRemove from "./ConfirmationRemove";
-
+import { FaFileDownload } from "react-icons/fa";
+import { saveAs } from "file-saver";
+import { generatePDFAdmin } from "../../services/generatePDF-admins";
 const AdminList = ({ administradores, isAdminPlus, setAdmins }) => {
   const [selectedUser, setSelectedUser] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -10,6 +12,7 @@ const AdminList = ({ administradores, isAdminPlus, setAdmins }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const maxAdminsPerPage = 4;
 
+  console.log(administradores);
   const paginateAdmins = (admins) => {
     const indexOfLastAdmin = currentPage * maxAdminsPerPage;
     const indexOfFirstAdmin = indexOfLastAdmin - maxAdminsPerPage;
@@ -36,14 +39,11 @@ const AdminList = ({ administradores, isAdminPlus, setAdmins }) => {
   };
 
   const handleDeleteAdmin = (email, id) => {
-    console.log(id);
     setSelectedUser({ email: email, id: id });
   };
 
   const handleConfirmRemove = async (id) => {
     setLoading(true);
-    console.log(id);
-
     try {
       await axios.delete(`http://localhost:3001/admins/${id}`);
 
@@ -61,9 +61,13 @@ const AdminList = ({ administradores, isAdminPlus, setAdmins }) => {
 
   return (
     <div className="w-full p-6 bg-white shadow rounded-lg mt-2">
-      <h2 className="text-2xl font-semibold mb-6 text-center">
-        Lista de Administradores
-      </h2>
+      <div className="flex justify-center items-center mb-6 space-x-4">
+        <h2 className="text-2xl font-semibold  text-center">
+          Lista de Administradores
+        </h2>
+      
+      </div>
+
       {administradores.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="w-full table-auto">
@@ -149,6 +153,7 @@ const AdminList = ({ administradores, isAdminPlus, setAdmins }) => {
           </button>
         </div>
       )}
+
       {selectedUser && (
         <ConfirmationRemove
           loading={loading}

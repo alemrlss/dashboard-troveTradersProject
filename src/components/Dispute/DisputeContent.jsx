@@ -772,21 +772,13 @@ function DisputeContent({ id }) {
                         Establecer tiempo
                       </button>
                     </div>
-                    <div className="flex flex-col">
-                      <button
-                        type="submit"
-                        className="bg-red-700 hover:bg-red-800 text-white font-semibold py-2 px-4 mx-2 rounded-md text-xs md:text-sm focus:outline-none focus:shadow-outline"
-                      >
-                        Denunciar al vendedor
-                      </button>
-                      <button
-                        type="submit"
-                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md text-xs mt-2 md:text-sm focus:outline-none focus:shadow-outline"
-                        onClick={handleContinueTrade}
-                      >
-                        Continuar Trade
-                      </button>
-                    </div>
+                    <button
+                      type="submit"
+                      className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md text-xs mt-2 md:text-sm focus:outline-none focus:shadow-outline"
+                      onClick={handleContinueTrade}
+                    >
+                      Continuar Trade
+                    </button>
                   </div>
                   <p className="text-red-500 text-center"> {errorDays}</p>
                   <p className="text-green-500 text-center"> {successDays}</p>

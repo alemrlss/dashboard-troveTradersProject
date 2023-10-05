@@ -13,6 +13,7 @@ import { ColorProvider } from "./contexts/colorContext";
 import { FontProvider } from "./contexts/FontContext";
 import { SocketProvider } from "./contexts/socketContext";
 import Dispute from "./pages/dispute";
+import Reports from "./pages/reports";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/dashboard/usuarios" element={<Users />} />
                     <Route path="/dashboard/disputas" element={<Disputes />} />
                     <Route path="/dashboard/bloqueos" element={<Blocks />} />
+                    <Route path="/dashboard/reportes" element={<Reports />} />
                     <Route path="/dispute/:id" element={<Dispute />} />
                     <Route
                       path="/dashboard/administracion"

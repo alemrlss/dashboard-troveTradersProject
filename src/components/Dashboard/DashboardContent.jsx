@@ -7,6 +7,7 @@ import Graphics from "./Graphics";
 
 const DashboardContent = () => {
   const [data, setData] = useState(null);
+  const [dataBar, setDataBar] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -17,6 +18,10 @@ const DashboardContent = () => {
           `http://localhost:3001/users/dashboard/info`
         );
 
+        const responseBar = await axios.get(
+          `http://localhost:3001/posts/categories/count`
+        );
+        setDataBar(responseBar.data);
         setLoading(false);
         setData([
           {
@@ -228,7 +233,7 @@ const DashboardContent = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white p-6 shadow-lg rounded-lg text-center flex items-center"
+                  className="bg-white shadow-lg rounded-lg text-center flex items-center"
                   style={{ borderColor: item.color }}
                 >
                   <div className="mr-4">
@@ -247,9 +252,10 @@ const DashboardContent = () => {
           <Graphics
             usersVerified={data[0].count}
             usersRegistered={data[1].count}
+            dataBar={dataBar}
           />
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 mt-2 animate-fade animate-duration-1000">
+          <div className="grid hidden gap-4 md:grid-cols-2 lg:grid-cols-2 mt-2 animate-fade animate-duration-1000">
             <TopUsersCard users={UserData} category="tradesAsSeller" />
             <TopUsersCard users={UserData} category="ranking" />
           </div>

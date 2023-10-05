@@ -39,10 +39,10 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           </button>
         </div>
 
-        <h2 className="font-bold text-lg sm:text-xl mb-4 border-b-2 border-white pb-6 pt-4">
+        <h2 className="font-bold text-lg sm:text-xl mb-4 border-b-2 border-white pb-6 pt-4 flex items-center">
           {" "}
           <BsGem className="inline-block mr-2 h-5 w-5" />
-          TroveTraders Admin
+          Panel TroveTraders{" "}
         </h2>
 
         <ul className="space-y-2">
@@ -105,15 +105,13 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           </li>
           <li>
             <Link
-              to="/dashboard/denuncias"
+              to="/dashboard/reportes"
               className={`block hover:${activeColor} m-5 text-lg font-semibold ${
-                isLinkActive("/dashboard/administracion")
-                  ? `${activeColor}`
-                  : ""
+                isLinkActive("/dashboard/reportes") ? `${activeColor}` : ""
               }`}
             >
               <FaFileAlt className="inline-block mr-3 h-6 w-6" />
-              Denuncias
+              Reportes
             </Link>
           </li>
         </ul>

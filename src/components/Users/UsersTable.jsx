@@ -5,6 +5,9 @@ import { BsSearch } from "react-icons/bs";
 import { FaTimes, FaCheck } from "react-icons/fa";
 import ConfirmationDelete from "./ConfirmationDelete";
 import axios from "axios";
+import { FaFileDownload } from "react-icons/fa";
+import imageProfile from "../../assets/images/profile.png";
+
 const UsersTable = ({ users, onEditUser, setUsers }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,10 +24,6 @@ const UsersTable = ({ users, onEditUser, setUsers }) => {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
-  //const handleClearSearch = () => {
-  //setSearchTerm("");
-  //};
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -86,6 +85,7 @@ const UsersTable = ({ users, onEditUser, setUsers }) => {
 
     setLoading(false);
   };
+
   return (
     <div className="animate-fade animate-once animate-duration-1000 animate-delay-0 animate-ease-in-out">
       <div className="relative">
@@ -127,11 +127,19 @@ const UsersTable = ({ users, onEditUser, setUsers }) => {
               paginateUsers(filteredUsers).map((user) => (
                 <tr key={user._id}>
                   <td className="border px-4 py-2">
-                    <img
-                      src={`http://localhost:3001/image/profile/${user.imageProfile}`}
-                      alt="User"
-                      className="w-8 h-8 rounded-full mx-auto"
-                    />
+                    {user.imageProfile ? (
+                      <img
+                        src={`http://localhost:3001/image/profile/${user.imageProfile}`}
+                        alt="Imagen de perfil"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={imageProfile}
+                        alt="Imagen de perfil"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    )}
                   </td>
                   <td className="border px-4 py-2">{user.name}</td>
                   <td className="border px-4 py-2">{user.lastName}</td>
@@ -171,44 +179,47 @@ const UsersTable = ({ users, onEditUser, setUsers }) => {
       </div>
       {/* Pagination */}
       {filteredUsers.length > maxUsersPerPage && (
-        <div className="mt-4 flex items-center justify-center space-x-4">
-          <button
-            onClick={handlePrevPage}
-            className={`px-3 py-2 rounded-lg ${
-              currentPage === 1
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-blue-500 text-white"
-            }`}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </button>
-          {pageNumbers.map((pageNumber) => (
+        <div className="mt-4 flex justify-center space-x-8 items-center">
+          <div className=" flex items-center justify-center space-x-4">
             <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
+              onClick={handlePrevPage}
               className={`px-3 py-2 rounded-lg ${
-                currentPage === pageNumber
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-blue-500"
+                currentPage === 1
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-blue-500 text-white"
               }`}
+              disabled={currentPage === 1}
             >
-              {pageNumber}
+              Anterior
             </button>
-          ))}
-          <button
-            onClick={handleNextPage}
-            className={`px-3 py-2 rounded-lg ${
-              currentPage === totalPages
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-blue-500 text-white"
-            }`}
-            disabled={currentPage === totalPages}
-          >
-            Siguiente
-          </button>
+            {pageNumbers.map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={`px-3 py-2 rounded-lg ${
+                  currentPage === pageNumber
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-blue-500"
+                }`}
+              >
+                {pageNumber}
+              </button>
+            ))}
+            <button
+              onClick={handleNextPage}
+              className={`px-3 py-2 rounded-lg ${
+                currentPage === totalPages
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-blue-500 text-white"
+              }`}
+              disabled={currentPage === totalPages}
+            >
+              Siguiente
+            </button>
+          </div>
         </div>
       )}
+
       {selectedUser && (
         <ConfirmationDelete
           loading={loading}
