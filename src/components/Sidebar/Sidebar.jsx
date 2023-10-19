@@ -1,16 +1,11 @@
 /* eslint-disable react/prop-types */
 
 import { Link, useLocation } from "react-router-dom";
-import {
-  BsGem,
-  BsX,
-  BsFillHouseLockFill,
-  BsExclamationOctagon,
-} from "react-icons/bs";
+import { BsX, BsFillHouseLockFill, BsExclamationOctagon } from "react-icons/bs";
 import { FaUsers, FaUserPlus, FaFileAlt } from "react-icons/fa";
 import { IoIosLock } from "react-icons/io";
 import { useColorContext } from "../../contexts/colorContext";
-
+import logo from "../../assets/images/logo.png";
 function Sidebar({ toggleSidebar, sidebarVisible }) {
   const { activeColor } = useColorContext();
 
@@ -26,9 +21,9 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
   return (
     <>
       <div
-        className={`m-2 sm:m-4 rounded-xl fixed sm:static left-0 top-0 h-full w-60 sm:w-72 bg-primary-200 text-white p-4 z-10 ${
+        className={`m-2 sm:m-4 rounded-xl fixed sm:static left-0 top-0 h-full w-60 sm:w-72 bg-primary-200 text-black p-4 z-10 ${
           sidebarVisible ? "" : "hidden"
-        } ${sidebarAnimationClass} sm:animate-fade animate-duration-100 `}
+        } ${sidebarAnimationClass} sm:animate-fade animate-duration-100 border border-black`}
       >
         <div className="flex justify-end mb-4 sm:hidden absolute top-4 right-4">
           <button
@@ -39,11 +34,12 @@ function Sidebar({ toggleSidebar, sidebarVisible }) {
           </button>
         </div>
 
-        <h2 className="font-bold text-lg sm:text-xl mb-4 border-b-2 border-white pb-6 pt-4 flex items-center">
-          {" "}
-          <BsGem className="inline-block mr-2 h-5 w-5" />
-          Panel TroveTraders{" "}
-        </h2>
+        <div className="flex justify-center items-center mb-4 border-b border-white pb-6 pt-4 space-x-2">
+          <img src={logo} alt="" className="w-14 h-14" />
+          <h2 className="font-bold text-lg sm:text-xl  flex items-center">
+            Panel TroveTraders
+          </h2>
+        </div>
 
         <ul className="space-y-2">
           <li>

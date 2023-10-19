@@ -233,7 +233,7 @@ const DashboardContent = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white shadow-lg rounded-lg text-center flex items-center"
+                  className="bg-white shadow-lg rounded-lg text-center flex items-center p-2"
                   style={{ borderColor: item.color }}
                 >
                   <div className="mr-4">
@@ -255,7 +255,7 @@ const DashboardContent = () => {
             dataBar={dataBar}
           />
 
-          <div className="grid hidden gap-4 md:grid-cols-2 lg:grid-cols-2 mt-2 animate-fade animate-duration-1000">
+          <div className="hidden grid gap-4 md:grid-cols-2 lg:grid-cols-2 mt-2 animate-fade animate-duration-1000">
             <TopUsersCard users={UserData} category="tradesAsSeller" />
             <TopUsersCard users={UserData} category="ranking" />
           </div>

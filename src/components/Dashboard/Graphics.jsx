@@ -17,7 +17,7 @@ function Graphics({ usersVerified, usersRegistered, dataBar }) {
     { name: "No Verificados", value: usersRegistered - usersVerified },
   ];
 
-  const COLORS = ["#42a5f5", "#F74343", "#FF0000", "#800080", "#e0e0e0"];
+  const COLORS = ["#91E06A", "#F95047", "#FF0000", "#800080", "#e0e0e0"];
 
   const COLORS_BAR = {
     Antiguedades: "#42a5f5",
@@ -82,7 +82,7 @@ function Graphics({ usersVerified, usersRegistered, dataBar }) {
             {dataBar.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS_BAR[entry.name] || "#8d3d3a"} // Usar el color del objeto COLORS_BAR
+                fill={COLORS_BAR[entry.name] || "#716870"} // Usar el color del objeto COLORS_BAR
               />
             ))}
           </Bar>

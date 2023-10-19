@@ -6,9 +6,9 @@ export default {
       /*Si no extiendo pierdo la base de tailwind*/
       colors: {
         primary: {
-          100: "#37474f",
-          300: "#a8814f",
-          200: "#8d3d3a"
+          100: "#93c5fd",
+          300: "#7F8491",
+          200: "#f0f0f0",
         },
       },
     },

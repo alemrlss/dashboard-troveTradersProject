@@ -4,7 +4,11 @@ import { useLocation } from "react-router-dom";
 import { BsGear, BsList } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import ConfigPanel from "./ConfigPanel";
+import { useAuthContext } from "../../contexts/AuthContext";
+
 const Navbar = ({ toggleSidebar }) => {
+  const { logout } = useAuthContext();
+
   const location = useLocation();
 
   const [showConfigPanel, setShowConfigPanel] = useState(false);
@@ -31,7 +35,10 @@ const Navbar = ({ toggleSidebar }) => {
             >
               <BsGear className="text-xl" />
             </button>
-            <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
+            <button
+              className="text-gray-800  hover:bg-gray-200 p-2 rounded-md"
+              onClick={logout}
+            >
               <FiLogOut className="text-xl text-red-400" />
             </button>
             {/* Mobile Menu Button */}
@@ -57,7 +64,12 @@ const Navbar = ({ toggleSidebar }) => {
           >
             <BsGear className="text-2xl" />
           </button>
-          <button className="text-gray-800  hover:bg-gray-200 p-2 rounded-md">
+          <button
+            className="text-gray-800  hover:bg-gray-200 p-2 rounded-md"
+            onClick={() => {
+              logout();
+            }}
+          >
             <FiLogOut className="text-2xl text-red-400" />
           </button>
         </div>
